@@ -22,7 +22,7 @@ const fileFilter = (req, file, cb) => {
 };
 
 // ✅ Multer upload middleware
-export const upload = multer({
+export const uploadImage = multer({
   storage: storage,
   fileFilter: fileFilter,
 });

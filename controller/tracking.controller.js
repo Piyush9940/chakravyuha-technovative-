@@ -1,5 +1,5 @@
-import Tracking from "../models/tracking.model.js";
-import Delivery from "../models/delivery.model.js";
+
+import Delivery from "../model/delivery.model.js";
 import { successResponse, errorResponse } from "../utils/responseHandler.js";
 
 

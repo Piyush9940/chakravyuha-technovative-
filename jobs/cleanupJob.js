@@ -1,7 +1,7 @@
 import cron from "node-cron";
 import moment from "moment";
-import Delivery from "../models/delivery.model.js";
-import User from "../models/user.model.js";
+import Delivery from "../model/delivery.model.js";
+import User from "../model/user.model.js";
 import { CLOUDINARY_CONFIG } from "../utils/constants.js";
 import { v2 as cloudinary } from "cloudinary";
 
