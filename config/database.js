@@ -1,17 +1,21 @@
 import mongoose from "mongoose";
 import { configDotenv } from "dotenv";
-configDotenv()
-const mongo_uri= process.env.MONGO_URI;
-if (!mongo_uri){
-    console.log("mongo uri is not defined");
-    process.exit(1);
+
+// Load environment variables
+configDotenv();
+
+const mongo_uri = process.env.MONGO_URI;
+
+if (!mongo_uri) {
+  console.error("❌ Mongo URI is not defined in .env");
+  process.exit(1);
 }
+
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    // In Mongoose 6+, these options are default, so no need to set them
+    await mongoose.connect(mongo_uri);
+
     console.log("✅ MongoDB connected successfully");
   } catch (error) {
     console.error("❌ MongoDB connection error:", error.message);
