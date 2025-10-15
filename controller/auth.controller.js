@@ -27,10 +27,8 @@ export const register = async (req, res) => {
       return res.status(400).json({ success: false, message: "All fields are required" });
     }
 
-    const allowedRoles = ["driver", "manager", "customer"];
-    if (!allowedRoles.includes(role)) {
-      return res.status(400).json({ success: false, message: "Invalid role" });
-    }
+    const allowedRoles = ["Driver", "Manager", "Customer"];
+    
 
     // Check if user exists
     const existingUser = await User.findOne({ email });

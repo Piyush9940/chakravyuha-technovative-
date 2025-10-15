@@ -5,7 +5,10 @@ import authrouter from "./routes/auth.route.js";
 configDotenv();
 const port = process.env.PORT;
 const app = express();
+
 connectDB()
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use("/api/v2/auth",authrouter);
 
 
