@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivery Confirmation</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="delivary-confirm.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10">
+                <!-- Header -->
+                <div class="text-center mb-4 fade-in">
+                    <h1 class="display-5 fw-bold text-primary">Delivery Confirmation</h1>
+                    <p class="lead">Complete the delivery process by following the steps below</p>
+                </div>
+                
+                <!-- Progress Indicator -->
+                <div class="step-indicator mb-5">
+                    <div class="step active" id="step1">
+                        1
+                        <span class="step-label">Upload Photo</span>
+                    </div>
+                    <div class="step" id="step2">
+                        2
+                        <span class="step-label">Location & Time</span>
+                    </div>
+                    <div class="step" id="step3">
+                        3
+                        <span class="step-label">Request OTP</span>
+                    </div>
+                    <div class="step" id="step4">
+                        4
+                        <span class="step-label">Complete</span>
+                    </div>
+                </div>
+                
+                <!-- Delivery Information Card -->
+                <div class="card mb-4 fade-in">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span>Delivery Information</span>
+                        <span class="status-badge status-pending">In Progress</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>Order ID:</strong> #ORD-7842</p>
+                                <p><strong>Customer:</strong> John Smith</p>
+                                <p><strong>Address:</strong> 123 Main St, Apt 4B, New York, NY</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Product:</strong> Smartphone X200</p>
+                                <p><strong>Delivery Agent:</strong> Michael Johnson</p>
+                                <p><strong>Scheduled Time:</strong> Today, 2:00 PM - 4:00 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Step 1: Upload Image -->
+                <div class="card mb-4 fade-in" id="step1-card">
+                    <div class="card-header">
+                        <i class="fas fa-camera me-2"></i>Step 1: Upload Delivery Photo
+                    </div>
+                    <div class="card-body">
+                        <div class="upload-area" id="uploadArea">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <h5>Click to upload delivery photo</h5>
+                            <p class="text-muted">Include the customer in the photo for verification</p>
+                            <input type="file" id="imageUpload" accept="image/*" style="display: none;">
+                            <div class="progress-bar mt-3">
+                                <div class="progress-fill" id="uploadProgress"></div>
+                            </div>
+                        </div>
+                        <img id="previewImage" class="preview-image" src="" alt="Preview">
+                    </div>
+                </div>
+                
+                <!-- Step 2: Location & Timestamp -->
+                <div class="card mb-4" id="step2-card" style="display: none;">
+                    <div class="card-header">
+                        <i class="fas fa-map-marker-alt me-2"></i>Step 2: Location & Timestamp
+                    </div>
+                    <div class="card-body">
+                        <div class="location-info">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="mb-0">Delivery Location</h5>
+                                <button class="btn btn-sm btn-outline-primary" id="captureLocation">
+                                    <i class="fas fa-sync-alt me-1"></i>Capture Again
+                                </button>
+                            </div>
+                            <p id="locationText" class="mb-2">Location not captured yet</p>
+                            <p id="timestampText" class="mb-0">Timestamp: --</p>
+                        </div>
+                        <div class="text-center mt-3">
+                            <button class="btn btn-primary" id="confirmLocation" disabled>
+                                <i class="fas fa-check-circle me-2"></i>Confirm Location & Time
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Step 3: OTP Request -->
+                <div class="card mb-4" id="step3-card" style="display: none;">
+                    <div class="card-header">
+                        <i class="fas fa-shield-alt me-2"></i>Step 3: Request OTP from Customer
+                    </div>
+                    <div class="card-body">
+                        <div class="otp-section">
+                            <h5 class="text-warning">Customer Verification Required</h5>
+                            <p>An OTP has been sent to the customer's registered mobile number</p>
+                            <div class="mb-3">
+                                <input type="text" class="otp-input" id="otpInput" maxlength="6" placeholder="______" disabled>
+                            </div>
+                            <div class="d-flex justify-content-center gap-3">
+                                <button class="btn btn-warning pulse" id="requestOtp">
+                                    <i class="fas fa-paper-plane me-2"></i>Request OTP
+                                </button>
+                                <button class="btn btn-success" id="verifyOtp" disabled>
+                                    <i class="fas fa-check me-2"></i>Verify OTP
+                                </button>
+                            </div>
+                            <p class="text-muted mt-3" id="otpTimer">OTP will expire in: <span id="countdown">05:00</span></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Step 4: Completion -->
+                <div class="card mb-4" id="step4-card" style="display: none;">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-check-circle me-2"></i>Delivery Completed</span>
+                        <span class="status-badge status-confirmed">Confirmed</span>
+                    </div>
+                    <div class="card-body text-center">
+                        <div class="mb-4">
+                            <i class="fas fa-check-circle text-success" style="font-size: 80px;"></i>
+                        </div>
+                        <h3 class="text-success mb-3">Delivery Confirmed Successfully!</h3>
+                        <p class="mb-4">The delivery has been completed and confirmed by the customer.</p>
+                        <div class="d-flex justify-content-center gap-3">
+                            <button class="btn btn-primary">
+                                <i class="fas fa-print me-2"></i>Print Receipt
+                            </button>
+                            <button class="btn btn-outline-primary">
+                                <i class="fas fa-home me-2"></i>Back to Dashboard
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+</body>
+</html>
+
+<script src="delivary-confirm.js"></script>

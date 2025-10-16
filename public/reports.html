@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="reports.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-chart-line me-2"></i>Reports Dashboard
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#"><i class="fas fa-home me-1"></i> Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="settings.html"><i class="fas fa-cog me-1"></i> Settings</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="profile-user.html"><i class="fas fa-user me-1"></i> Profile</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <!-- Page Header -->
+        <div class="row mb-4">
+            <div class="col">
+                <h1 class="display-5 fw-bold text-primary">Reports Dashboard</h1>
+                <p class="text-muted">Generate, view, and download reports with ease</p>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card stats-card animate__animated animate__fadeInLeft">
+                    <div class="stats-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="stats-number">142</div>
+                    <div class="stats-label">Total Reports</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card stats-card animate__animated animate__fadeInLeft animate__delay-1s">
+                    <div class="stats-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stats-number">118</div>
+                    <div class="stats-label">Completed</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card stats-card animate__animated animate__fadeInRight animate__delay-1s">
+                    <div class="stats-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stats-number">18</div>
+                    <div class="stats-label">Pending</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card stats-card animate__animated animate__fadeInRight">
+                    <div class="stats-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="stats-number">6</div>
+                    <div class="stats-label">Failed</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter Section -->
+        <div class="filter-section animate__animated animate__fadeInUp">
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                    <label for="driverFilter" class="form-label">Driver</label>
+                    <select class="form-select" id="driverFilter">
+                        <option value="">All Drivers</option>
+                        <option value="driver1">John Smith</option>
+                        <option value="driver2">Sarah Johnson</option>
+                        <option value="driver3">Michael Brown</option>
+                        <option value="driver4">Emily Davis</option>
+                    </select>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="dateFilter" class="form-label">Date Range</label>
+                    <input type="date" class="form-control" id="dateFilter">
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="statusFilter" class="form-label">Status</label>
+                    <select class="form-select" id="statusFilter">
+                        <option value="">All Statuses</option>
+                        <option value="completed">Completed</option>
+                        <option value="pending">Pending</option>
+                        <option value="failed">Failed</option>
+                    </select>
+                </div>
+                <div class="col-md-3 mb-3 d-flex align-items-end">
+                    <button class="btn btn-primary w-100" id="applyFilters">
+                        <i class="fas fa-filter me-2"></i>Apply Filters
+                    </button>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col">
+                    <button class="btn btn-outline-secondary me-2" id="resetFilters">
+                        <i class="fas fa-redo me-2"></i>Reset Filters
+                    </button>
+                    <button class="btn btn-success" id="generateReport">
+                        <i class="fas fa-plus me-2"></i>Generate New Report
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reports Table -->
+        <div class="card animate__animated animate__fadeInUp animate__delay-1s">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="fas fa-list me-2"></i>Recent Reports</h5>
+                <div>
+                    <button class="btn btn-sm btn-outline-light me-2" id="exportAllPdf">
+                        <i class="fas fa-file-pdf me-1"></i>Export All as PDF
+                    </button>
+                    <button class="btn btn-sm btn-outline-light" id="exportAllExcel">
+                        <i class="fas fa-file-excel me-1"></i>Export All as Excel
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Report ID</th>
+                                <th>Driver</th>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reportsTableBody">
+                            <!-- Reports will be populated here by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div class="text-muted">Showing <span id="showingCount">5</span> of 142 reports</div>
+                    <nav>
+                        <ul class="pagination mb-0">
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#">Previous</a>
+                            </li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="card animate__animated animate__fadeInLeft">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-bolt me-2"></i>Quick Actions</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row text-center">
+                            <div class="col-4 mb-3">
+                                <button class="btn btn-outline-primary download-btn p-3 w-100">
+                                    <i class="fas fa-file-pdf fa-2x mb-2"></i><br>
+                                    Daily Report
+                                </button>
+                            </div>
+                            <div class="col-4 mb-3">
+                                <button class="btn btn-outline-success download-btn p-3 w-100">
+                                    <i class="fas fa-file-excel fa-2x mb-2"></i><br>
+                                    Weekly Summary
+                                </button>
+                            </div>
+                            <div class="col-4 mb-3">
+                                <button class="btn btn-outline-warning download-btn p-3 w-100">
+                                    <i class="fas fa-chart-bar fa-2x mb-2"></i><br>
+                                    Performance
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card animate__animated animate__fadeInRight">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-chart-pie me-2"></i>Report Statistics</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="reportChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light mt-5 py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Reports Dashboard</h5>
+                    <p class="mb-0">A comprehensive solution for managing and analyzing your reports.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0">&copy; 2025 Reports Dashboard. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+  <script src="reports.js"></script> 
+  
+</body>
+</html>

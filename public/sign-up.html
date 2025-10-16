@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Your Account</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="sign-up.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Create Your Account</h1>
+            <p>Join our platform in just a few steps</p>
+        </div>
+        
+        <div class="step-indicator">
+            <div class="step completed">1</div>
+            <div class="step-line active"></div>
+            <div class="step active">2</div>
+            <div class="step-line"></div>
+            <div class="step">3</div>
+        </div>
+        
+        <div class="form-container">
+            <!-- Step 1: Personal Information -->
+            <div class="form-step active" id="step1">
+                <div class="input-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" placeholder="Enter your full name">
+                    <div class="error-message" id="nameError">Please enter a valid name</div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="Enter your email">
+                    <div class="error-message" id="emailError">Please enter a valid email address</div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" placeholder="Enter your phone number">
+                    <div class="error-message" id="phoneError">Please enter a valid phone number</div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="role">Select Role</label>
+                    <select id="role">
+                        <option value="">Choose your role</option>
+                        <option value="customer">Customer</option>
+                        <option value="driver">Driver</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                    <div class="error-message" id="roleError">Please select a role</div>
+                </div>
+                
+                <button class="btn" id="nextToStep2" onclick="window.location.href='OTP-Verification.html'">Continue</button>
+            </div>
+            
+            <!-- Step 2: Profile Picture & OTP Verification -->
+            <div class="form-step" id="step2">
+                <div class="profile-picture-container">
+                    <div class="profile-picture" id="profilePicture">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <input type="file" id="profileImage" class="file-input" accept="image/*">
+                    <p>Upload Profile Picture (Optional)</p>
+                    <div class="error-message" id="imageError">Please select a valid image file</div>
+                </div>
+                
+                <div class="input-group">
+                    <label>OTP Verification</label>
+                    <p style="font-size: 14px; margin-bottom: 15px; color: #555;">We've sent a 6-digit code to your phone. Please enter it below.</p>
+                    <div class="otp-container">
+                        <input type="text" class="otp-input" maxlength="1" id="otp1">
+                        <input type="text" class="otp-input" maxlength="1" id="otp2">
+                        <input type="text" class="otp-input" maxlength="1" id="otp3">
+                        <input type="text" class="otp-input" maxlength="1" id="otp4">
+                        <input type="text" class="otp-input" maxlength="1" id="otp5">
+                        <input type="text" class="otp-input" maxlength="1" id="otp6">
+                    </div>
+                    <div class="error-message" id="otpError">Please enter the correct OTP</div>
+                    <div class="success-message" id="otpSuccess">OTP verified successfully!</div>
+                </div>
+                
+                <div class="resend-otp">
+                    <p>Didn't receive the code? <a href="#" id="resendOtp">Resend OTP</a></p>
+                </div>
+                
+                <button class="btn" id="verifyOtp">Verify OTP</button>
+                <button class="btn btn-outline" id="backToStep1">Back</button>
+            </div>
+            
+            <!-- Step 3: Account Creation Success -->
+            <div class="form-step" id="step3">
+                <div style="text-align: center; padding: 20px 0;">
+                    <div style="width: 80px; height: 80px; background-color: var(--success); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                        <i class="fas fa-check" style="color: white; font-size: 36px;"></i>
+                    </div>
+                    <h2 style="margin-bottom: 10px; color: var(--success);">Account Created Successfully!</h2>
+                    <p style="color: #555; margin-bottom: 30px;">Your account has been created. You can now log in to access your dashboard.</p>
+                    <button class="btn" id="goToLogin">Go to Login</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="sign-up.js"></script>
+    
+</body>
+</html>

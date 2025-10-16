@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivery Analytics Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=visualization"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="analytics.css">n
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-chart-line me-2"></i>
+                Delivery Analytics
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#"><i class="fas fa-home me-1"></i> Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-truck me-1"></i> Deliveries</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-cog me-1"></i> Settings</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <!-- Page Header -->
+        <div class="row mb-4 fade-in">
+            <div class="col">
+                <h1 class="display-5 fw-bold">Delivery Performance Analytics</h1>
+                <p class="lead">Monitor key metrics and optimize your delivery operations</p>
+            </div>
+        </div>
+
+        <!-- Date Range Filter -->
+        <div class="filter-section fade-in">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h5 class="mb-0">Filter Data</h5>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-outline-primary active">Last 7 Days</button>
+                        <button type="button" class="btn btn-outline-primary">Last 30 Days</button>
+                        <button type="button" class="btn btn-outline-primary">Last Quarter</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Metrics -->
+        <div class="row fade-in">
+            <div class="col-md-3">
+                <div class="card stat-card">
+                    <div class="stat-value text-primary">94.7%</div>
+                    <div class="stat-label">Delivery Rate</div>
+                    <div class="progress">
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: 94.7%"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card stat-card">
+                    <div class="stat-value text-success">32 min</div>
+                    <div class="stat-label">Avg. Delivery Time</div>
+                    <div class="progress">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 85%"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card stat-card">
+                    <div class="stat-value text-warning">88.2%</div>
+                    <div class="stat-label">On-Time Percentage</div>
+                    <div class="progress">
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: 88.2%"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card stat-card">
+                    <div class="stat-value text-info">1,247</div>
+                    <div class="stat-label">Total Deliveries</div>
+                    <div class="progress">
+                        <div class="progress-bar bg-info" role="progressbar" style="width: 92%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="row mt-4">
+            <!-- Delivery Rate Chart -->
+            <div class="col-lg-6 fade-in">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span>Delivery Rate Trend</span>
+                        <i class="fas fa-truck-loading"></i>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="deliveryRateChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Average Time Chart -->
+            <div class="col-lg-6 fade-in">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span>Average Delivery Time</span>
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="avgTimeChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- On-Time Percentage Chart -->
+            <div class="col-lg-6 fade-in">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span>On-Time Delivery Percentage</span>
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="onTimeChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Delivery Distribution -->
+            <div class="col-lg-6 fade-in">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span>Delivery Distribution by Time of Day</span>
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="distributionChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Heatmap Section -->
+        <div class="row mt-4 fade-in">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span>Delivery Density Heatmap</span>
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <div class="card-body">
+                        <div id="map"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Delivery Analytics</h5>
+                    <p>Optimizing delivery operations through data-driven insights.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p>&copy; 2025 Delivery Analytics Dashboard. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+  <script src="analytics.js"></script>
+</body>
+</html>
+
+

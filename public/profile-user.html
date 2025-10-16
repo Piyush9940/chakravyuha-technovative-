@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="profile-user.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Profile Card -->
+        <div class="card">
+            <div class="profile-header">
+                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Profile Photo" class="profile-image" id="profileImage">
+                <h1 class="profile-name">Alex Johnson</h1>
+               
+                <span class="profile-id">ID: USR-7842</span>
+            </div>
+            
+            <div class="profile-details">
+                <div class="detail-item">
+                    <div class="detail-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="detail-content">
+                        <h3>EMAIL</h3>
+                        <p>alex.johnson@example.com</p>
+                    </div>
+                </div>
+                
+                <div class="detail-item">
+                    <div class="detail-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="detail-content">
+                        <h3>PHONE</h3>
+                        <p>+1 (555) 123-4567</p>
+                    </div>
+                </div>
+                
+                <div class="detail-item">
+                    <div class="detail-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="detail-content">
+                        <h3>LOCATION</h3>
+                        <p>San Francisco, CA</p>
+                    </div>
+                </div>
+                
+                
+                
+                <div class="action-buttons">
+                    <button class="btn btn-primary" id="updatePhotoBtn">
+                        <i class="fas fa-camera"></i> Update Photo
+                    </button>
+                    <button class="btn btn-secondary" id="updatePasswordBtn">
+                        <i class="fas fa-key"></i> Change Password
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Update Photo Modal -->
+    <div class="modal" id="photoModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Update Profile Photo</h2>
+                <button class="close-btn" id="closePhotoModal">&times;</button>
+            </div>
+            
+            <div class="photo-upload" id="photoUploadArea">
+                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Current Photo" class="photo-preview" id="photoPreview">
+                <p>Click to upload a new photo</p>
+                <input type="file" class="file-input" id="photoInput" accept="image/*">
+            </div>
+            
+            <button class="save-btn" id="savePhotoBtn">Save Changes</button>
+        </div>
+    </div>
+    
+    <!-- Update Password Modal -->
+    <div class="modal" id="passwordModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Change Password</h2>
+                <button class="close-btn" id="closePasswordModal">&times;</button>
+            </div>
+            
+            <div class="form-group">
+                <label for="currentPassword">Current Password</label>
+                <input type="password" class="form-control" id="currentPassword" placeholder="Enter current password">
+            </div>
+            
+            <div class="form-group">
+                <label for="newPassword">New Password</label>
+                <input type="password" class="form-control" id="newPassword" placeholder="Enter new password">
+            </div>
+            
+            <div class="form-group">
+                <label for="confirmPassword">Confirm New Password</label>
+                <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm new password">
+            </div>
+            
+            <button class="save-btn" id="savePasswordBtn">Update Password</button>
+        </div>
+    </div>
+    
+    <script src="profile-user.js"></script>
+</body>
+</html>

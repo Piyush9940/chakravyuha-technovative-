@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivery Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+   <link rel="stylesheet" href="delivery.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#"><i class="fas fa-shipping-fast me-2"></i>DeliverEase Pro</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-bell"></i></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-user-circle me-1"></i>Admin User
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Profile</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-lg-3 mb-4">
+                <div class="sidebar">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-page="dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-page="add-delivery"><i class="fas fa-plus-circle"></i> Add Delivery</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#" data-page="delivery-list"><i class="fas fa-list"></i> Delivery List</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="driver-dashboard.html" data-page="drivers"><i class="fas fa-users" ></i> Drivers</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-page="regions"><i class="fas fa-map-marker-alt"></i> Regions</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-page="analytics"><i class="fas fa-chart-bar"></i> Analytics</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-page="settings"><i class="fas fa-cog"></i> Settings</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-lg-9">
+                <!-- Add Delivery Page -->
+                <div id="add-delivery-page" class="page-content" style="display: none;">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2 class="page-title"><i class="fas fa-plus-circle me-2"></i>Add New Delivery</h2>
+                        <button class="btn btn-outline-primary" data-page="delivery-list"><i class="fas fa-arrow-left me-2"></i>Back to List</button>
+                    </div>
+
+                    <div class="form-section fade-in">
+                        <h4 class="mb-4"><i class="fas fa-info-circle me-2"></i>Delivery Information</h4>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Delivery ID</label>
+                                <input type="text" class="form-control" placeholder="Enter unique delivery ID">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Package Type</label>
+                                <select class="form-select">
+                                    <option selected>Select package type</option>
+                                    <option>Small Package</option>
+                                    <option>Medium Package</option>
+                                    <option>Large Package</option>
+                                    <option>Fragile Item</option>
+                                    <option>Document</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Sender Name</label>
+                                <input type="text" class="form-control" placeholder="Enter sender's name">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Sender Phone</label>
+                                <input type="text" class="form-control" placeholder="Enter sender's phone number">
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Receiver Name</label>
+                                <input type="text" class="form-control" placeholder="Enter receiver's name">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Receiver Phone</label>
+                                <input type="text" class="form-control" placeholder="Enter receiver's phone number">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Delivery Instructions</label>
+                            <textarea class="form-control" rows="3" placeholder="Any special delivery instructions"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-section fade-in">
+                        <h4 class="mb-4"><i class="fas fa-map-marked-alt me-2"></i>Location Information</h4>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label">Pickup Location</label>
+                                <input type="text" class="form-control mb-3" placeholder="Enter pickup address">
+                                <div class="map-container">
+                                    <div id="pickupMap" class="map-placeholder">
+                                        <i class="fas fa-map fa-2x mb-2"></i>
+                                        <span>Pickup location map</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-4">
+                                <label class="form-label">Drop-off Location</label>
+                                <input type="text" class="form-control mb-3" placeholder="Enter drop-off address">
+                                <div class="map-container">
+                                    <div id="dropoffMap" class="map-placeholder">
+                                        <i class="fas fa-map fa-2x mb-2"></i>
+                                        <span>Drop-off location map</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Estimated Distance</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" value="8.5" readonly>
+                                    <span class="input-group-text">km</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Estimated Time</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" value="25" readonly>
+                                    <span class="input-group-text">minutes</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section fade-in">
+                        <h4 class="mb-4"><i class="fas fa-user-tie me-2"></i>Assign Driver</h4>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Select Region</label>
+                                <select class="form-select" id="regionSelect">
+                                    <option selected>All Regions</option>
+                                    <option>North Region</option>
+                                    <option>South Region</option>
+                                    <option>East Region</option>
+                                    <option>West Region</option>
+                                    <option>Central Region</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Priority Level</label>
+                                <select class="form-select">
+                                    <option selected>Standard</option>
+                                    <option>Express</option>
+                                    <option>Urgent</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Available Drivers</label>
+                            <div id="driversList">
+                                <div class="driver-card d-flex align-items-center" data-driver="1">
+                                    <div class="driver-avatar">MG</div>
+                                    <div class="driver-info">
+                                        <h6 class="mb-1">Maria Garcia</h6>
+                                        <p class="mb-0">North Region • 4.8/5 Rating</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="driver-card d-flex align-items-center" data-driver="2">
+                                    <div class="driver-avatar">DW</div>
+                                    <div class="driver-info">
+                                        <h6 class="mb-1">David Wilson</h6>
+                                        <p class="mb-0">South Region • 4.9/5 Rating</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="driver-card d-flex align-items-center" data-driver="3">
+                                    <div class="driver-avatar">SW</div>
+                                    <div class="driver-info">
+                                        <h6 class="mb-1">Sarah Williams</h6>
+                                        <p class="mb-0">East Region • 4.7/5 Rating</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="driver-card d-flex align-items-center" data-driver="4">
+                                    <div class="driver-avatar">JS</div>
+                                    <div class="driver-info">
+                                        <h6 class="mb-1">John Smith</h6>
+                                        <p class="mb-0">West Region • 4.6/5 Rating</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section fade-in">
+                        <h4 class="mb-4"><i class="fas fa-file-invoice me-2"></i>Billing Information</h4>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Delivery Fee</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+                                    <input type="text" class="form-control" value="12.50" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Tax</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+                                    <input type="text" class="form-control" value="1.25" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Total Amount</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+                                    <input type="text" class="form-control" value="13.75" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Payment Method</label>
+                                <select class="form-select">
+                                    <option selected>Credit Card</option>
+                                    <option>Debit Card</option>
+                                    <option>PayPal</option>
+                                    <option>Cash on Delivery</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end mt-4">
+                        <button class="btn btn-secondary me-3">Save as Draft</button>
+                        <button class="btn btn-primary btn-add-delivery pop-animation"><i class="fas fa-plus me-2"></i>Add Delivery</button>
+                    </div>
+                </div>
+
+                <!-- Delivery List Page -->
+                <div id="delivery-list-page" class="page-content fade-in">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2 class="page-title"><i class="fas fa-list me-2"></i>Delivery List</h2>
+                        <button class="btn btn-primary" data-page="add-delivery"><i class="fas fa-plus me-2"></i>New Delivery</button>
+                    </div>
+
+                    <!-- Stats Cards -->
+                    <div class="row mb-4">
+                        <div class="col-md-3 col-6">
+                            <div class="card stats-card">
+                                <div class="stats-number">24</div>
+                                <div class="stats-label">Pending</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="card stats-card">
+                                <div class="stats-number">18</div>
+                                <div class="stats-label">In Transit</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="card stats-card">
+                                <div class="stats-number">156</div>
+                                <div class="stats-label">Delivered</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="card stats-card">
+                                <div class="stats-number">5</div>
+                                <div class="stats-label">Failed</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Filters -->
+                    <div class="filter-section">
+                        <div class="row">
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">Status</label>
+                                <select class="form-select" id="statusFilter">
+                                    <option selected>All Status</option>
+                                    <option>Pending</option>
+                                    <option>In Transit</option>
+                                    <option>Delivered</option>
+                                    <option>Failed</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">Driver</label>
+                                <select class="form-select" id="driverFilter">
+                                    <option selected>All Drivers</option>
+                                    <option>John Smith</option>
+                                    <option>Maria Garcia</option>
+                                    <option>David Johnson</option>
+                                    <option>Sarah Williams</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">Region</label>
+                                <select class="form-select" id="regionFilter">
+                                    <option selected>All Regions</option>
+                                    <option>North</option>
+                                    <option>South</option>
+                                    <option>East</option>
+                                    <option>West</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-3 d-flex align-items-end">
+                                <button class="btn btn-outline-primary w-100" id="applyFilters"><i class="fas fa-filter me-2"></i>Apply Filters</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Delivery Table -->
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <span>Recent Deliveries</span>
+                            <div class="input-group" style="width: 250px;">
+                                <input type="text" class="form-control" placeholder="Search deliveries...">
+                                <button class="btn btn-outline-secondary" type="button"><i class="fas fa-search"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Customer</th>
+                                            <th>Driver</th>
+                                            <th>Region</th>
+                                            <th>Status</th>
+                                            <th>ETA</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="delivery-row" data-id="DL-1001">
+                                            <td>#DL-1001</td>
+                                            <td>John Doe</td>
+                                            <td>Maria Garcia</td>
+                                            <td>North</td>
+                                            <td><span class="status-badge status-pending">Pending</span></td>
+                                            <td>Today, 14:30</td>
+                                            <td>
+                                                <button class="btn btn-action btn-edit"><i class="fas fa-edit"></i></button>
+                                                <button class="btn btn-action btn-delete"><i class="fas fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                        <tr class="delivery-row" data-id="DL-1002">
+                                            <td>#DL-1002</td>
+                                            <td>Sarah Johnson</td>
+                                            <td>David Wilson</td>
+                                            <td>South</td>
+                                            <td><span class="status-badge status-in-transit">In Transit</span></td>
+                                            <td>Today, 16:45</td>
+                                            <td>
+                                                <button class="btn btn-action btn-edit"><i class="fas fa-edit"></i></button>
+                                                <button class="btn btn-action btn-delete"><i class="fas fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                        <tr class="delivery-row" data-id="DL-1003">
+                                            <td>#DL-1003</td>
+                                            <td>Michael Brown</td>
+                                            <td>John Smith</td>
+                                            <td>East</td>
+                                            <td><span class="status-badge status-delivered">Delivered</span></td>
+                                            <td>Yesterday, 11:20</td>
+                                            <td>
+                                                <button class="btn btn-action btn-edit"><i class="fas fa-edit"></i></button>
+                                                <button class="btn btn-action btn-delete"><i class="fas fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                        <tr class="delivery-row" data-id="DL-1004">
+                                            <td>#DL-1004</td>
+                                            <td>Emily Davis</td>
+                                            <td>Sarah Williams</td>
+                                            <td>West</td>
+                                            <td><span class="status-badge status-failed">Failed</span></td>
+                                            <td>Today, 10:15</td>
+                                            <td>
+                                                <button class="btn btn-action btn-edit"><i class="fas fa-edit"></i></button>
+                                                <button class="btn btn-action btn-delete"><i class="fas fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                        <tr class="delivery-row" data-id="DL-1005">
+                                            <td>#DL-1005</td>
+                                            <td>Robert Miller</td>
+                                            <td>Maria Garcia</td>
+                                            <td>North</td>
+                                            <td><span class="status-badge status-in-transit pulse">In Transit</span></td>
+                                            <td>Today, 18:30</td>
+                                            <td>
+                                                <button class="btn btn-action btn-edit"><i class="fas fa-edit"></i></button>
+                                                <button class="btn btn-action btn-delete"><i class="fas fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-footer d-flex justify-content-between align-items-center">
+                            <div>Showing 1 to 5 of 203 deliveries</div>
+                            <nav>
+                                <ul class="pagination mb-0">
+                                    <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Delivery Details Page -->
+                <div id="delivery-details-page" class="page-content" style="display: none;">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2 class="page-title"><i class="fas fa-info-circle me-2"></i>Delivery Details</h2>
+                        <button class="btn btn-outline-primary" data-page="delivery-list"><i class="fas fa-arrow-left me-2"></i>Back to List</button>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <!-- Route Map -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <i class="fas fa-map-marked-alt me-2"></i>Route Map
+                                </div>
+                                <div class="card-body">
+                                    <div class="map-container">
+                                        <div id="routeMap" class="map-placeholder">
+                                            <i class="fas fa-map fa-3x me-3"></i>
+                                            <span>Interactive map showing delivery route</span>
+                                        </div>
+                                    </div>
+                                    <div class="row text-center mt-3">
+                                        <div class="col-md-6">
+                                            <h6>Pickup Location</h6>
+                                            <p class="mb-0">123 Main St, Downtown</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h6>Drop Location</h6>
+                                            <p class="mb-0">456 Oak Ave, Uptown</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Timeline -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <i class="fas fa-stream me-2"></i>Delivery Timeline
+                                </div>
+                                <div class="card-body">
+                                    <div class="timeline">
+                                        <div class="timeline-item completed">
+                                            <div class="timeline-content">
+                                                <h6>Order Created</h6>
+                                                <p class="mb-0 text-muted">Today, 09:30 AM</p>
+                                            </div>
+                                        </div>
+                                        <div class="timeline-item completed">
+                                            <div class="timeline-content">
+                                                <h6>Package Picked Up</h6>
+                                                <p class="mb-0 text-muted">Today, 10:15 AM</p>
+                                            </div>
+                                        </div>
+                                        <div class="timeline-item active">
+                                            <div class="timeline-content">
+                                                <h6>In Transit</h6>
+                                                <p class="mb-0 text-muted">Expected arrival: 02:30 PM</p>
+                                            </div>
+                                        </div>
+                                        <div class="timeline-item">
+                                            <div class="timeline-content">
+                                                <h6>Delivered</h6>
+                                                <p class="mb-0 text-muted">Not yet delivered</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <!-- OTP Section -->
+                            <div class="otp-display">
+                                <h5><i class="fas fa-key me-2"></i>Delivery OTP</h5>
+                                <h2 class="my-3">7 4 9 2</h2>
+                                <p class="mb-0">Share this code with the recipient for verification</p>
+                            </div>
+
+                            <!-- Customer Info -->
+                            <div class="customer-info">
+                                <h5 class="mb-3"><i class="fas fa-user me-2"></i>Customer Information</h5>
+                                <div class="mb-3">
+                                    <label class="form-label text-muted mb-1">Name</label>
+                                    <p class="mb-0">John Doe</p>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label text-muted mb-1">Phone</label>
+                                    <p class="mb-0">+1 (555) 123-4567</p>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label text-muted mb-1">Email</label>
+                                    <p class="mb-0">john.doe@example.com</p>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label text-muted mb-1">Delivery Address</label>
+                                    <p class="mb-0">456 Oak Avenue, Uptown, NY 10001</p>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label text-muted mb-1">Special Instructions</label>
+                                    <p class="mb-0">Leave at front door if no answer</p>
+                                </div>
+                            </div>
+
+                            <!-- Proof of Delivery -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <i class="fas fa-camera me-2"></i>Proof of Delivery
+                                </div>
+                                <div class="card-body">
+                                    <div class="pod-image">
+                                        <i class="fas fa-image fa-2x me-3"></i>
+                                        <span>POD image will appear here after delivery</span>
+                                    </div>
+                                    <button class="btn btn-outline-primary w-100"><i class="fas fa-upload me-2"></i>Upload Image</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="delivary.js"></script>
+</body>
+</html>
+
